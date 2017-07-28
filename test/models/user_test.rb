@@ -72,4 +72,8 @@ class UserTest < ActiveSupport::TestCase
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
   end
+
+  test "测试令牌为空，authenticated?应该返回false" do
+    assert_not @user.authenticated?('')
+  end
 end
