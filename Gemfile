@@ -17,6 +17,13 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '3.1.11'
 
+#批量生成数据
+gem 'faker', '1.6.6'
+
+#分页
+gem 'will_paginate','3.1.0'
+gem 'bootstrap-will_paginate','0.0.10'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug', platform: :mri
