@@ -13,6 +13,7 @@ lijunhao:
   name: lijunhao
   email: lijunhao@qq.com
   password_digest: <%= User.digest('password') %>
+  admin: true
 
 michael:
   name: Michael Example
