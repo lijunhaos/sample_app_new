@@ -4,11 +4,12 @@ class UsersController < ApplicationController
   before_action :admin_user,      only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: TRUE).paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
   end
 
   def new
@@ -18,9 +19,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "欢迎来到星星论坛!"
-      redirect_to @user
+      @user.send_activation_email
+      flash[:info] = "请检查您的Email邮箱激活您的账户."
+      redirect_to root_url
     else
       render 'new'
     end

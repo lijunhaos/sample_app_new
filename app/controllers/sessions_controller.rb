@@ -7,10 +7,17 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email:params[:session][:email].downcase)
     if @user && @user.authenticate(params[:session][:password])
-      # 登入用户,然后重定向到用户的资料页面
-      log_in @user
-      params[:session][:remember_me] == '1'? remember(@user) : forget(@user)
-      redirect_back_or @user
+      if @user.activated?
+        # 登入用户,然后重定向到用户的资料页面
+        log_in @user
+        params[:session][:remember_me] == '1'? remember(@user) : forget(@user)
+        redirect_back_or @user
+      else
+        message = "账户未被激活. "
+        message += "查看你的邮箱，并激活帐号."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       # 创建一个错误消息
       flash.now[:danger] = 'email或密码错误'

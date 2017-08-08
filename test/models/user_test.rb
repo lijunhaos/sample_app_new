@@ -74,6 +74,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "测试令牌为空，authenticated?应该返回false" do
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:remember,'')
   end
 end
