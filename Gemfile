@@ -24,6 +24,16 @@ gem 'faker', '1.6.6'
 gem 'will_paginate','3.1.0'
 gem 'bootstrap-will_paginate','0.0.10'
 
+# 上传组件
+gem 'carrierwave'
+# Aliyun / Upyun 可选项
+gem 'carrierwave-upyun'
+gem 'carrierwave-aliyun'
+gem 'fog'
+# Lazy load
+gem 'mini_magick', require: false
+
+
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug', platform: :mri

@@ -76,4 +76,12 @@ class UserTest < ActiveSupport::TestCase
   test "测试令牌为空，authenticated?应该返回false" do
     assert_not @user.authenticated?(:remember,'')
   end
+
+  test "关联的微薄应该被删除" do
+    @user.save
+    @user.microposts.create!(content: "Lorem ipsum")
+    assert_difference "Micropost.count", -1 do
+      @user.destroy
+    end
+  end
 end
