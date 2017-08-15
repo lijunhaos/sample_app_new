@@ -84,4 +84,36 @@ class UserTest < ActiveSupport::TestCase
       @user.destroy
     end
   end
+
+  test "should follow and unfollow a user" do
+    lijunhao = users(:lijunhao)
+    archer = users(:archer)
+    assert_not lijunhao.following?(archer)
+    lijunhao.follow(archer)
+    assert lijunhao.following?(archer)
+    assert archer.followers.include?(lijunhao)
+    lijunhao.unfollow(archer)
+    assert_not lijunhao.following?(archer)
+  end
+
+  test "feed should have the right posts" do
+    lijunhao = users(:lijunhao)
+    archer = users(:archer)
+    lana = users(:lana)
+
+    # 关注的用户发布的微博
+    lana.microposts.each do |post_following|
+      assert lijunhao.feed.include?(post_following)
+    end
+
+    # 自己的微博
+    lijunhao.microposts.each do |post_self|
+      assert lijunhao.feed.include?(post_self)
+    end
+
+    # 未关注用户的微博
+    archer.microposts.each do |post_unfolowed|
+      assert_not lijunhao.feed.include?(post_unfolowed)
+    end
+  end
 end
